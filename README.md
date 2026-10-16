@@ -334,6 +334,21 @@ This gives you the same result as the two `/plugin` commands above.
 </details>
 
 <details>
+<summary><strong>Claude Code on the web (cloud sessions): no <code>/plugin</code> command</strong></summary>
+
+Cloud sessions start from a fresh container, and `/plugin` is not available there, so plugin installs and anything written to `~/.claude/` are lost when the session ends. Install ECC into your project instead and commit it, so every session that clones the repo picks it up:
+
+```bash
+git clone https://github.com/affaan-m/ECC.git /tmp/ECC
+cd /path/to/your-project
+bash /tmp/ECC/install.sh --profile minimal --target claude-project
+git add .claude && git commit -m "chore: add ECC project install"
+```
+
+This writes ECC's skills, agents, and commands into the project's `.claude/` directory. The `minimal` profile adds no hooks, so the committed files do not depend on where the repo is checked out. Start a new session after pushing to load them.
+</details>
+
+<details>
 <summary><strong>Naming + migration note (ecc@ecc, affaan-m/ECC, ecc-universal)</strong></summary>
 
 ECC has three public identifiers, and they are not interchangeable:
